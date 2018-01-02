@@ -27,6 +27,7 @@ function transformSegment(segment, output) {
         },
         'properties': {}
     };
+
     let featCollection = {
         'type': 'FeatureCollection',
         'features': []
@@ -40,6 +41,14 @@ function transformSegment(segment, output) {
         feature['properties']['ltohn'] = segment['properties']['carmen:ltohn'][0][i];
         feature['properties']['rfromhn'] = segment['properties']['carmen:rfromhn'][0][i];
         feature['properties']['rtohn'] = segment['properties']['carmen:rtohn'][0][i];
+        featCollection['features'].push(JSON.parse(JSON.stringify(feature)));
+    }
+
+    // loop through addresses, combine with coords to feature, push
+    feature['geometry']['type'] = 'Point';
+    for (var j = 0; j < segment['properties']['carmen:addressnumber'][1].length; j++) {
+        feature['properties']['carmen:addressnumber'] = segment['properties']['carmen:addressnumber'][1][j];
+        feature['geometry']['coordinates'] = segment['geometry']['geometries'][1]['coordinates'][j];
         featCollection['features'].push(JSON.parse(JSON.stringify(feature)));
     }
 
