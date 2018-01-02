@@ -46,6 +46,7 @@ function transformSegment(segment, output) {
 
     // loop through addresses, combine with coords to feature, push
     feature['geometry']['type'] = 'Point';
+    feature['properties'] = {};
     for (var j = 0; j < segment['properties']['carmen:addressnumber'][1].length; j++) {
         feature['properties']['carmen:addressnumber'] = segment['properties']['carmen:addressnumber'][1][j];
         feature['geometry']['coordinates'] = segment['geometry']['geometries'][1]['coordinates'][j];
